@@ -4,6 +4,8 @@ gem 'bootstrap-sass'
 gem 'simple_form'
 gem 'carrierwave', github: 'carrierwaveuploader/carrierwave'
 gem "mini_magick"
+gem "jquery-fileupload-rails"
+gem 'jquery-ui-rails'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.6'
