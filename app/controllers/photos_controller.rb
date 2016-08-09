@@ -37,15 +37,7 @@ class PhotosController < ApplicationController
   # PATCH/PUT /photos/1
   # PATCH/PUT /photos/1.json
   def update
-    respond_to do |format|
-      if @photo.update(photo_params)
-        format.html { redirect_to product_photo_path(@product,@photo), notice: 'Photo was successfully updated.' }
-        format.json { render :show, status: :ok, location: @photo }
-      else
-        format.html { render :edit }
-        format.json { render json: @photo.errors, status: :unprocessable_entity }
-      end
-    end
+
   end
 
   # DELETE /photos/1
@@ -69,6 +61,18 @@ class PhotosController < ApplicationController
     @photo.images = images
     return @photo
    end
+
+  def remove_image_at_index
+    @product = Product.find(params[:product_id])
+    @photo = @product.photo
+    remain_images = @photo.images # copy the array
+    deleted_image = remain_images.delete_at(params[:index].to_i) # delete the target image
+    deleted_image.try(:remove!) # delete image from S3
+    @photo.images = remain_images # re-assign back
+    @photo.save
+    render json:true
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_photo
