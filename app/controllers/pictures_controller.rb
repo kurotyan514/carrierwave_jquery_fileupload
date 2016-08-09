@@ -30,13 +30,16 @@ class PicturesController < ApplicationController
   def create
     @gallery = Gallery.find(params[:gallery_id])
     @picture = @gallery.pictures.build(picture_params)
+
     respond_to do |format|
       if @picture.save
-        format.html { redirect_to gallery_picture_path(@gallery,@picture), notice: 'Picture was successfully created.' }
-        format.json { render :show, status: :created, location: @picture }
-      else
-        format.html { render :new }
-        format.json { render json: @picture.errors, status: :unprocessable_entity }
+      format.json { render json: {files: [@picture.to_jq_upload(@gallery)] }}
+      # if @picture.save
+      #   format.html { redirect_to gallery_picture_path(@gallery,@picture), notice: 'Picture was successfully created.' }
+      #   format.json { render :show, status: :created, location: @picture }
+      # else
+      #   format.html { render :new }
+      #   format.json { render json: @picture.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -60,6 +63,7 @@ class PicturesController < ApplicationController
   # DELETE /pictures/1.json
   def destroy
     @gallery = Gallery.find(params[:gallery_id])
+    @picture = @gallery.pictures.find(params[:id])
     @picture.destroy
     respond_to do |format|
       format.html { redirect_to gallery_pictures_path(@gallery), notice: 'Picture was successfully destroyed.' }
@@ -75,6 +79,6 @@ class PicturesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def picture_params
-      params.require(:picture).permit(:gallery_id, :image)
+      params.require(:picture).permit(:gallery_id, {images:[]})
     end
 end
