@@ -1,1 +1,7 @@
-carrierwave_jquery_fileupload
+multiple branch:
+一筆model資料，裡面的images欄位有多筆圖片資料，上傳的圖片會在同一個資料夾
+
+
+single branch
+一筆model資料，裡面的images欄位有一筆圖片資料，每一張圖片都會是一筆model資料，並且每個圖片都會有自己的資料夾
+建議用這種方式比較簡單好處理
