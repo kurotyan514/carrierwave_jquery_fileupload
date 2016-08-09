@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
-  resources :pictures
-  resources :galleries
+root "galleries#index"
+  resources :galleries do
+    resources :pictures
+  end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

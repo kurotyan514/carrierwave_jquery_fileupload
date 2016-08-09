@@ -16,9 +16,9 @@
       <tr>
         <td><%= picture.gallery_id %></td>
         <td><%= picture.image %></td>
-        <td><%= link_to 'Show', picture %></td>
-        <td><%= link_to 'Edit', edit_picture_path(picture) %></td>
-        <td><%= link_to 'Destroy', picture, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Show', gallery_picture_path(@gallery ,picture) %></td>
+        <td><%= link_to 'Edit', edit_gallery_picture_path(@gallery , picture) %></td>
+        <td><%= link_to 'Destroy', gallery_picture_path(@gallery , picture), method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -26,4 +26,4 @@
 
 <br>
 
-<%= link_to 'New Picture', new_picture_path %>
+<%= link_to 'New Picture', new_gallery_picture_path(@gallery) %>
