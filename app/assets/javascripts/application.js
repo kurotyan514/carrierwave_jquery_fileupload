@@ -15,6 +15,7 @@
 //= require turbolinks
 //= require jquery
 //= require bootstrap-sprockets
-//= require jquery-fileupload/basic-plus
 //= require jquery-fileupload
+//= require jquery-fileupload/basic-plus
+
 //= require_tree .

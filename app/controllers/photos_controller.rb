@@ -26,15 +26,10 @@ class PhotosController < ApplicationController
   # POST /photos
   # POST /photos.json
   def create
-    @product = Product.find(params[:product_id])
-    @photo = @product.build_photo(photo_params)
+    @photo = add_more_images(photo_params[:images])
     respond_to do |format|
       if @photo.save
-        format.html { redirect_to product_photo_path(@product,@photo), notice: 'Photo was successfully created.' }
-        format.json { render :show, status: :created, location: @photo }
-      else
-        format.html { render :new }
-        format.json { render json: @photo.errors, status: :unprocessable_entity }
+         format.json { render json: {files: [@photo.to_jq_upload(@product)] }}
       end
     end
   end
@@ -63,6 +58,17 @@ class PhotosController < ApplicationController
     end
   end
 
+  def add_more_images(new_images)
+    @product = Product.find(params[:product_id])
+    @photo = @product.photo
+    if @photo.nil?
+      @photo = @product.build_photo
+    end
+    images = @photo.images
+    images += new_images
+    @photo.images = images
+    return @photo
+   end
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_photo
@@ -72,6 +78,6 @@ class PhotosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def photo_params
-      params.require(:photo).permit(:product_id, :images)
+      params.require(:photo).permit(:product_id, {images:[]})
     end
 end
